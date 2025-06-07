@@ -4,7 +4,6 @@ import {
   Document,
   Packer,
   Paragraph,
-  TextRun,
   HeadingLevel,
   Table,
   TableRow,
@@ -16,68 +15,21 @@ import {
 export default function SiteSurveyForm() {
   const [currentSection, setCurrentSection] = useState("siteInfo");
   const [formData, setFormData] = useState({
-    customerName: "",
-    region: "",
-    projectName: "",
-    siteName: "",
-    siteOwner: "",
-    siteID: "",
-    siteStackCode: "",
-    baseStationName: "",
-    numberOfSectors: "",
-    baseStationAzimuths: "",
-    mastLegNumber: "",
-    baseStationHeight: "",
-    numberOfLinks: "",
-    p2pLinkHeights: "",
-    p2pLinkAzimuths: "",
-    siteStreetAddress: "",
-    contactPerson: "",
-    alternateContact: "",
-    contactPhone: "",
-    inspectedBy: "",
-    surveyPerformedBy: "",
-    dateOfSiteSurvey: "",
-    latitude: "",
-    longitude: "",
-    altitude: "",
-    siteAddress: "",
-    mastType: "",
-    mastHeight: "",
-    mastCondition: "",
-    mountingPoleDiameter: "",
-    antennaHeight: "",
-    numberOfAntennas: "",
-    antennasPerSector: "",
-    cableEntryPoint: "",
-    shelterSize: "",
-    lightningProtection: false,
-    earthing: false,
-    equipmentLocation: "",
-    powerType: "",
-    powerAvailability: "",
-    powerRating: "",
-    cableLengthSector1: "",
-    cableLengthSector2: "",
-    cableLengthSector3: "",
-    cableLengthSector4: "",
-    excavationRequired: false,
-    unstableGround: false,
-    additionalLabour: false,
-    notes: ""
+    customerName: "", region: "", projectName: "", siteName: "", siteOwner: "", siteID: "",
+    siteStackCode: "", baseStationName: "", numberOfSectors: "", baseStationAzimuths: "",
+    mastLegNumber: "", baseStationHeight: "", numberOfLinks: "", p2pLinkHeights: "",
+    p2pLinkAzimuths: "", siteStreetAddress: "", contactPerson: "", alternateContact: "",
+    contactPhone: "", inspectedBy: "", surveyPerformedBy: "", dateOfSiteSurvey: "",
+    latitude: "", longitude: "", altitude: "", siteAddress: "", mastType: "", mastHeight: "",
+    mastCondition: "", mountingPoleDiameter: "", antennaHeight: "", numberOfAntennas: "",
+    antennasPerSector: "", cableEntryPoint: "", shelterSize: "", lightningProtection: false,
+    earthing: false, equipmentLocation: "", powerType: "", powerAvailability: "",
+    powerRating: "", cableLengthSector1: "", cableLengthSector2: "", cableLengthSector3: "",
+    cableLengthSector4: "", excavationRequired: false, unstableGround: false,
+    additionalLabour: false, notes: ""
   });
-
   const [photos, setPhotos] = useState([]);
-
-  const sections = [
-    "siteInfo",
-    "locationMast",
-    "power",
-    "cabling",
-    "environment",
-    "photos",
-    "review"
-  ];
+  const sections = ["siteInfo", "locationMast", "power", "cabling", "environment", "photos", "review"];
 
   const handleChange = (key) => (e) => {
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -116,9 +68,18 @@ export default function SiteSurveyForm() {
     setPhotos(updated);
   };
 
-  const handleSubmit = async () => {
-    const doc = new Document();
+  const renderInput = (label, key, type = "text") => (
+    <input
+      type={type}
+      placeholder={label}
+      value={formData[key] || ""}
+      onChange={handleChange(key)}
+      className="w-full border p-2 rounded"
+    />
+  );
 
+    const handleSubmit = async () => {
+    const doc = new Document();
     const makeTable = (title, data) => [
       new Paragraph({ text: title, heading: HeadingLevel.HEADING_2 }),
       new Table({
@@ -126,13 +87,13 @@ export default function SiteSurveyForm() {
         rows: data.map(([label, value]) =>
           new TableRow({
             children: [
-              new TableCell({ children: [new Paragraph({ text: label, bold: true })] }),
+              new TableCell({ children: [new Paragraph(label)] }),
               new TableCell({ children: [new Paragraph(String(value))] })
             ]
           })
         )
       }),
-      new Paragraph({ text: "" })
+      new Paragraph("")
     ];
 
     const sectionsData = [
@@ -146,19 +107,19 @@ export default function SiteSurveyForm() {
         ["Stack Code", formData.siteStackCode],
         ["Base Station Name", formData.baseStationName],
         ["Number of Sectors", formData.numberOfSectors],
-        ["Azimuths", formData.baseStationAzimuths],
+        ["Base Station Azimuths", formData.baseStationAzimuths],
         ["Mast Leg Number", formData.mastLegNumber],
         ["Base Station Height", formData.baseStationHeight],
         ["Number of Links", formData.numberOfLinks],
-        ["Link Heights", formData.p2pLinkHeights],
-        ["Link Azimuths", formData.p2pLinkAzimuths],
-        ["Street Address", formData.siteStreetAddress],
-        ["Contact Person", formData.contactPerson],
+        ["P2P Link Heights", formData.p2pLinkHeights],
+        ["P2P Link Azimuths", formData.p2pLinkAzimuths],
+        ["Site Street Address", formData.siteStreetAddress],
+        ["Primary Contact", formData.contactPerson],
         ["Alternate Contact", formData.alternateContact],
         ["Contact Phone", formData.contactPhone],
         ["Inspected By", formData.inspectedBy],
         ["Survey Performed By", formData.surveyPerformedBy],
-        ["Survey Date", formData.dateOfSiteSurvey]
+        ["Date of Site Survey", formData.dateOfSiteSurvey]
       ]),
       makeTable("Location & Mast", [
         ["Latitude", formData.latitude],
@@ -221,21 +182,38 @@ export default function SiteSurveyForm() {
     saveAs(blob, "Site_Survey_Report.docx");
   };
 
-  const renderInput = (placeholder, key, type = "text") => (
-    <input
-      type={type}
-      placeholder={placeholder}
-      value={formData[key] || ""}
-      onChange={handleChange(key)}
-      className="w-full border p-2 rounded"
-    />
-  );
-
-  return (
+    return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-xl">
       <h1 className="text-3xl font-bold mb-6 text-center text-blue-800">
         Site Survey - {currentSection.replace(/([A-Z])/g, " $1").toUpperCase()}
       </h1>
+
+      {currentSection === "siteInfo" && (
+        <div className="space-y-4">
+          {renderInput("Customer Name", "customerName")}
+          {renderInput("Region", "region")}
+          {renderInput("Project Name", "projectName")}
+          {renderInput("Site Name", "siteName")}
+          {renderInput("Site Owner", "siteOwner")}
+          {renderInput("Site ID", "siteID")}
+          {renderInput("Stack Code", "siteStackCode")}
+          {renderInput("Base Station Name", "baseStationName")}
+          {renderInput("Number of Sectors", "numberOfSectors")}
+          {renderInput("Base Station Azimuths", "baseStationAzimuths")}
+          {renderInput("Mast Leg Number", "mastLegNumber")}
+          {renderInput("Base Station Height", "baseStationHeight")}
+          {renderInput("Number of Links", "numberOfLinks")}
+          {renderInput("P2P Link Heights", "p2pLinkHeights")}
+          {renderInput("P2P Link Azimuths", "p2pLinkAzimuths")}
+          {renderInput("Site Street Address", "siteStreetAddress")}
+          {renderInput("Primary Contact", "contactPerson")}
+          {renderInput("Alternate Contact", "alternateContact")}
+          {renderInput("Contact Phone", "contactPhone")}
+          {renderInput("Inspected By", "inspectedBy")}
+          {renderInput("Survey Performed By", "surveyPerformedBy")}
+          {renderInput("Date of Site Survey", "dateOfSiteSurvey", "date")}
+        </div>
+      )}
 
       {currentSection === "photos" && (
         <div className="space-y-4">
@@ -249,7 +227,7 @@ export default function SiteSurveyForm() {
           />
           {photos.map((photo, idx) => (
             <div key={idx} className="border p-2 rounded">
-              <img src={photo.src} alt={photo-${idx}} className="w-full rounded mb-2" />
+              <img src={photo.src} alt={`photo-${idx}`} className="w-full rounded mb-2" />
               <textarea
                 placeholder="Photo caption"
                 className="w-full border p-2 mb-2 rounded"
@@ -269,7 +247,9 @@ export default function SiteSurveyForm() {
 
       {currentSection === "review" && (
         <div>
-          <pre className="bg-gray-100 p-4 text-sm overflow-x-auto">{JSON.stringify(formData, null, 2)}</pre>
+          <pre className="bg-gray-100 p-4 text-sm overflow-x-auto">
+            {JSON.stringify(formData, null, 2)}
+          </pre>
         </div>
       )}
 
@@ -294,3 +274,4 @@ export default function SiteSurveyForm() {
     </div>
   );
 }
+
