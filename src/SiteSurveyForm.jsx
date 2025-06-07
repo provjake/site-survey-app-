@@ -78,7 +78,7 @@ export default function SiteSurveyForm() {
     />
   );
 
-    const handleSubmit = async () => {
+  const handleSubmit = async () => {
     const doc = new Document();
     const makeTable = (title, data) => [
       new Paragraph({ text: title, heading: HeadingLevel.HEADING_2 }),
@@ -120,41 +120,6 @@ export default function SiteSurveyForm() {
         ["Inspected By", formData.inspectedBy],
         ["Survey Performed By", formData.surveyPerformedBy],
         ["Date of Site Survey", formData.dateOfSiteSurvey]
-      ]),
-      makeTable("Location & Mast", [
-        ["Latitude", formData.latitude],
-        ["Longitude", formData.longitude],
-        ["Altitude", formData.altitude],
-        ["Site Address", formData.siteAddress],
-        ["Mast Type", formData.mastType],
-        ["Mast Height", formData.mastHeight],
-        ["Mast Condition", formData.mastCondition],
-        ["Mounting Pole Diameter", formData.mountingPoleDiameter],
-        ["Antenna Height", formData.antennaHeight],
-        ["Number of Antennas", formData.numberOfAntennas],
-        ["Antennas per Sector", formData.antennasPerSector],
-        ["Cable Entry Point", formData.cableEntryPoint],
-        ["Shelter Size", formData.shelterSize],
-        ["Lightning Protection", formData.lightningProtection ? "Yes" : "No"],
-        ["Earthing", formData.earthing ? "Yes" : "No"],
-        ["Equipment Location", formData.equipmentLocation]
-      ]),
-      makeTable("Power", [
-        ["Power Type", formData.powerType],
-        ["Availability", formData.powerAvailability],
-        ["Rating", formData.powerRating]
-      ]),
-      makeTable("Cabling", [
-        ["Sector 1", formData.cableLengthSector1],
-        ["Sector 2", formData.cableLengthSector2],
-        ["Sector 3", formData.cableLengthSector3],
-        ["Sector 4", formData.cableLengthSector4]
-      ]),
-      makeTable("Environment", [
-        ["Excavation Required", formData.excavationRequired ? "Yes" : "No"],
-        ["Unstable Ground", formData.unstableGround ? "Yes" : "No"],
-        ["Additional Labour", formData.additionalLabour ? "Yes" : "No"],
-        ["Notes", formData.notes]
       ])
     ];
 
@@ -182,7 +147,7 @@ export default function SiteSurveyForm() {
     saveAs(blob, "Site_Survey_Report.docx");
   };
 
-    return (
+  return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-xl">
       <h1 className="text-3xl font-bold mb-6 text-center text-blue-800">
         Site Survey - {currentSection.replace(/([A-Z])/g, " $1").toUpperCase()}
@@ -212,6 +177,73 @@ export default function SiteSurveyForm() {
           {renderInput("Inspected By", "inspectedBy")}
           {renderInput("Survey Performed By", "surveyPerformedBy")}
           {renderInput("Date of Site Survey", "dateOfSiteSurvey", "date")}
+        </div>
+      )}
+
+      {currentSection === "locationMast" && (
+        <div className="space-y-4">
+          {renderInput("Latitude", "latitude")}
+          {renderInput("Longitude", "longitude")}
+          {renderInput("Altitude", "altitude")}
+          {renderInput("Site Address", "siteAddress")}
+          {renderInput("Mast Type", "mastType")}
+          {renderInput("Mast Height", "mastHeight")}
+          {renderInput("Mast Condition", "mastCondition")}
+          {renderInput("Mounting Pole Diameter", "mountingPoleDiameter")}
+          {renderInput("Antenna Height", "antennaHeight")}
+          {renderInput("Number of Antennas", "numberOfAntennas")}
+          {renderInput("Antennas per Sector", "antennasPerSector")}
+          {renderInput("Cable Entry Point", "cableEntryPoint")}
+          {renderInput("Shelter Size", "shelterSize")}
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={formData.lightningProtection} onChange={handleChange("lightningProtection")} />
+            Lightning Protection?
+          </label>
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={formData.earthing} onChange={handleChange("earthing")} />
+            Earthing?
+          </label>
+          {renderInput("Equipment Location", "equipmentLocation")}
+        </div>
+      )}
+
+      {currentSection === "power" && (
+        <div className="space-y-4">
+          {renderInput("Power Source Type", "powerType")}
+          {renderInput("Power Availability", "powerAvailability")}
+          {renderInput("Power Rating", "powerRating")}
+        </div>
+      )}
+
+      {currentSection === "cabling" && (
+        <div className="space-y-4">
+          {renderInput("Cable Length Sector 1", "cableLengthSector1")}
+          {renderInput("Cable Length Sector 2", "cableLengthSector2")}
+          {renderInput("Cable Length Sector 3", "cableLengthSector3")}
+          {renderInput("Cable Length Sector 4", "cableLengthSector4")}
+        </div>
+      )}
+
+      {currentSection === "environment" && (
+        <div className="space-y-4">
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={formData.excavationRequired} onChange={handleChange("excavationRequired")} />
+            Excavation Required?
+          </label>
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={formData.unstableGround} onChange={handleChange("unstableGround")} />
+            Unstable Ground?
+          </label>
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={formData.additionalLabour} onChange={handleChange("additionalLabour")} />
+            Additional Labour Needed?
+          </label>
+          <textarea
+            placeholder="Additional Notes"
+            value={formData.notes}
+            onChange={handleChange("notes")}
+            className="w-full border p-2 rounded"
+          />
         </div>
       )}
 
@@ -274,4 +306,3 @@ export default function SiteSurveyForm() {
     </div>
   );
 }
-
