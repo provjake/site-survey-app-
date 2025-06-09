@@ -139,35 +139,144 @@ export default function App() {
       ].map(label => ({ label, type: "text" }))
     },
     {
-      title: "Antenna Mounting and Cabling",
+      title: "Lightning and Earthing",
       fields: [
-        "Type of Mounting Pole used", "Diameter of pole (mm)", "Height of pole (m)",
-        "Cable entry to shelter/equipment room", "Antenna mounting brackets required?",
-        "If yes, specify bracket details"
+        "Is there lightning protection in place on the mast?", "Comments", "Is there an earth mat in place for the mast?", 
+        "Is existing antenna and RF cable earthing in place?","Is future expansion on existing masts planned?","Existing cable tray(s)",
+        "Spare capacity?","Routing problems: Specify"
       ].map(label => ({ label, type: "text" }))
     },
     {
-      title: "Power and Earthing",
+      title: "Cabeling and Shelter / Building Requirements",
       fields: [
-        "Power socket available at shelter?", "Specify voltage and socket type",
-        "AC or DC power?", "Grounding/Earthing availability?", "Is Lightning Protection present?"
+        "Shelter, remote shelter or building: (Existing or new)", "Specify owner: ", "Specify: (Share site infrastructure and or equipment.)", 
+        "Approx. floor / room space available for Base Station equipment? LxW","Approx. container / shelter room size? LxW","Raised Floor ?",
+        "Height of raised floor?","Wall texture (Fibreglass, concrete, steel, etc.)","Comment: ","19” Cabinet required?",
+        "Is a modem tray required for 19” rack ?","Need the equipment shelf / rack to be bolted to the floor?",
+        "If so, what is the floor composition? (Fibreglass, concrete, steel, etc.) ",
+        "Existing Concrete Plinth in place?"
       ].map(label => ({ label, type: "text" }))
     },
     {
-      title: "Shelter / Equipment Room Details",
+      title: "Base station cable requirements",
       fields: [
-        "Shelter / room: Size (L x W x H)", "Type of construction (brick, prefab, container)",
-        "Ventilation available?", "Cooling equipment (fans, AC)?",
-        "Available rack space?", "Lighting inside shelter?", "Access secured?"
+        "Specify cable lengths (Antenna / bracket to “indoor unit): Sector 1","Specify cable lengths (Antenna / bracket to “indoor unit): Sector 2",
+        "Specify cable lengths (Antenna / bracket to “indoor unit): Sector 3","Specify cable lengths (Antenna / bracket to “indoor unit): Sector 4",
       ].map(label => ({ label, type: "text" }))
     },
     {
-      title: "Additional Notes and Recommendations",
+      title: "Point to point cable requirements",
       fields: [
-        "Installer notes or constraints", "Recommended equipment setup",
-        "Final recommendation summary", "Name of person completing this form"
+        "PtP cable requirements - Specify cable lengths (Antenna / bracket to “indoor unit): Link 1",
+        "PtP cable requirements - Specify cable lengths (Antenna / bracket to “indoor unit): Link 2",
+        "PtP cable requirements - Specify cable lengths (Antenna / bracket to “indoor unit): Link 3",
+        "PtP cable requirements - Specify cable lengths (Antenna / bracket to “indoor unit): Link 4"
       ].map(label => ({ label, type: "text" }))
-    }
+    },
+    {
+      title: "Approximate length of IF feeder cable route",
+      fields: [
+        "Approximate length of IF feeder cable route: Top to bottom of mast? (Vertical distance)",
+        "Approximate length of IF feeder cable route: Bottom of mast to building / shelter entry? (Horizontal distance)",
+        "Approximate length of IF feeder cable route: Building entry to 19” cabinet (Horizontal distance)",
+        "Approximate length of IF feeder cable route: Top of mast to antenna’s ( Horizontal distance)",
+        "Approx. total length of IF cable",
+        "Number of floors cable must transverse vertically",
+        "IF cable entry into the room from mast via (Floor, Cabinet, Wall)?"
+      ].map(label => ({ label, type: "text" }))
+    },
+    {
+      title: "Open existing ducting in room and confirm with site owner the use thereof",
+      fields: [
+        "existing ducting in room: Is there space for more cable?",
+        "existing ducting in room: Will conduit be required from the point of indoor entry to the equipment rack?",
+        "existing ducting in room: Specify the distance required to be build?",
+        "existing ducting in room: Provide details and routing? "
+
+      ].map(label => ({ label, type: "text" }))
+    },
+    {
+      title: "Cable tray / conduit requirements on mast",
+      fields: [
+        "Is there existing cable conduit from mast to the building or shelter?",
+        "Specify the cable tray distance required to be build?",
+        "Provide details and routing? ",
+        "Number of additional conduits required? "
+
+      ].map(label => ({ label, type: "text" }))
+    },
+    {
+      title: "Cable earthing requirements",
+      fields: [
+        "Specify earth cable lengths: Sector 1",
+        "Specify earth cable lengths: Sector 2",
+        "Specify earth cable lengths: Sector 3",
+        "Specify earth cable lengths: Sector 4",
+        "Specify earth connection type (M8 or 10 Bolt, Line Tap)"
+
+      ].map(label => ({ label, type: "text" }))
+    },
+    {
+      title: "Power and ground provision",
+      fields: [
+        "Is AC power required for equipment?",
+        "Distance to equipment to be installed? (AC Distribution box)",
+        "Building Power: Commercial ?",
+        "Building Power: Generator ?",
+        "Comments",
+        "AC Power Phase(s)",
+        "Volts",
+        "Frequency (Hz)",
+        "Max Power Capacity",
+        "KVA",
+        "Will rectifier power be available?",
+        "Is AC power dedicated or not dedicated?",
+        "If not what other devices are on the circuits?",
+        "Available power feed for equipment? (48DC Volt, DB Box)",
+        "“A” Feed: distance to equipment to be installed?",
+        "Specify position available?"
+
+      ].map(label => ({ label, type: "text" }))
+    },
+    {
+      title: "Electrical Ground",
+      fields: [
+        "Main earth bar (Electrical ground) available?",
+        "Distance to equipment to be installed?",
+        "Is lightning ground protection available?",
+        "Cable tray’s / trunking / ducting available",
+        "Existing cable tray’s / trunking / ducting: Type",
+        "Existing cable tray’s / trunking / ducting: Size",
+        "Additional cable tray’s required?",
+        "Comments",
+        "Cable tray length to equipment to be installed?",
+        "Cable wall entries (Yes / No)",
+        "Specify type (steel plate, cement)",
+        "Distance to equipment to be installed?",
+        "Diameter of cable entries?",
+        "Grommet sizes required for cable entries?",
+        "Number of grommets required?",
+        "Comments",
+        "Any unusual hazards",
+        "Civil requirements for container or remote shelter (Plinth civil’s, etc) (Yes/No)",
+        "Specify: (Requirements, position, responsibility) ",
+        "Envisaged number of standoff brackets required on Mast",
+        "Specify antenna height installation on mast or pole?",
+        "Specify diameter of mounting pole on installation height (mm)",
+        "Comments",
+      ].map(label => ({ label, type: "text" }))
+    },
+    {
+      title: "General",
+      fields: [
+        "Is excavation required? ",
+        "What does excavation cut through? (E.g. paved areas, parking lot, etc.)",
+        "Is security, guarding and or personal safety necessary?",
+        "Is there any indication of unstable ground (Swamp ground, permafrost, clay, soft sand, etc?)",
+        "Is additional labour available to assist with rigging?"
+      ].map(label => ({ label, type: "text" }))
+    },
+    
   ];
 
   const pages = [
